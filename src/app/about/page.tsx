@@ -47,14 +47,14 @@ void btnDarkOutline;
 
 const cardStyle: CSSProperties = {
   background: "#fff",
-  borderRadius: "1.25rem",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)",
+  borderRadius: "1.5rem",
+  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
   overflow: "hidden",
 };
 
 const sectionHeading: CSSProperties = {
   fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)",
-  fontWeight: 900,
+  fontWeight: 800,
   color: "#1A1A1A",
   lineHeight: 1.15,
   letterSpacing: "-0.02em",
@@ -125,7 +125,7 @@ function AnimatedStat({ target, suffix, label }: StatConfig) {
 
   return (
     <div ref={ref} style={{ textAlign: "center" }}>
-      <p style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 900, color: teal, margin: 0, fontVariantNumeric: "tabular-nums" }}>
+      <p style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 800, color: teal, margin: 0, fontVariantNumeric: "tabular-nums" }}>
         {count}
         {suffix}
       </p>
@@ -165,7 +165,17 @@ function TeamCard({
 }) {
   const initial = name.charAt(0);
   return (
-    <div style={{ ...cardStyle, ...cardStyleOverride }}>
+    <div
+      style={{ ...cardStyle, ...cardStyleOverride, transition: "transform 0.2s, box-shadow 0.2s" }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = "0 8px 32px rgba(43,191,179,0.15)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = (cardStyleOverride?.boxShadow as string) || "0 2px 12px rgba(0,0,0,0.06)";
+      }}
+    >
       <div
         style={{
           height: "200px",
@@ -231,40 +241,77 @@ const gridTeam: CSSProperties = {
 };
 
 export default function AboutPage() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 900);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div style={{ background: "#fff" }}>
       {/* SECTION 1 */}
       <section
         style={{
           width: "100%",
-          background: dark,
+          background: "#F0FAFA",
           paddingTop: "140px",
           paddingBottom: "80px",
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div style={wrap}>
+        <div style={{ position: "absolute", top: 0, right: 0, width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(43,191,179,0.15) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ position: "absolute", bottom: "-120px", left: "-80px", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,168,0,0.12) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ ...wrap, position: "relative", zIndex: 1 }}>
           <nav style={{ fontSize: "0.8rem", color: teal, marginBottom: "1rem" }}>
             <Link href="/" style={{ color: teal, textDecoration: "none" }}>
               Home
             </Link>
-            <span style={{ color: "rgba(255,255,255,0.35)" }}> / </span>
-            <span style={{ color: "#fff" }}>About Us</span>
+            <span style={{ color: "rgba(26,26,26,0.35)" }}> / </span>
+            <span style={{ color: "#1A1A1A" }}>About Us</span>
           </nav>
           <h1
             style={{
               fontSize: "clamp(2.5rem, 5vw, 4rem)",
-              fontWeight: 900,
-              color: "#fff",
+              fontWeight: 800,
+              color: "#1A1A1A",
               margin: 0,
               marginBottom: "1rem",
             }}
           >
             About Us
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.05rem", maxWidth: "32rem", margin: "0 auto" }}>
+          <p style={{ color: muted, fontSize: "1.05rem", maxWidth: "32rem", margin: "0 auto" }}>
             Empowering young people in Ghana through Global Citizenship Education since 2016.
           </p>
+          <div
+            style={{
+              position: isMobile ? "static" : "absolute",
+              bottom: isMobile ? undefined : "2rem",
+              right: isMobile ? undefined : "1.5rem",
+              zIndex: 10,
+              background: "#fff",
+              borderRadius: "1rem",
+              padding: "1rem 1.25rem",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              minWidth: "180px",
+              textAlign: "left",
+              margin: isMobile ? "1rem auto 0" : undefined,
+              width: isMobile ? "fit-content" : undefined,
+            }}
+          >
+            <p style={{ margin: 0, color: teal, fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>Since</p>
+            <p style={{ margin: "0.2rem 0 0", fontSize: "2rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>2016</p>
+            <p style={{ margin: "0.2rem 0 0", color: muted, fontSize: "0.78rem" }}>Empowering youth</p>
+            <p style={{ margin: "0.55rem 0 0", fontSize: "0.72rem", color: "#1A1A1A", fontWeight: 600 }}>Impact</p>
+            <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "999px", marginTop: "0.4rem", overflow: "hidden" }}>
+              <div style={{ width: "85%", height: "100%", background: "#2BBFB3", borderRadius: "999px" }} />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -333,8 +380,38 @@ export default function AboutPage() {
                 Our Programmes
               </Link>
             </div>
-            <div style={{ position: "relative", height: "520px", borderRadius: "2rem", overflow: "hidden" }}>
-              <Image src="/images/about.webp" alt="" fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+            <div style={{ position: "relative", overflow: "visible" }}>
+              <div style={{ position: "relative", height: "520px", borderRadius: "2rem", overflow: "hidden" }}>
+                <Image src="/images/about.webp" alt="" fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+              </div>
+              <div
+                style={{
+                  display: isMobile ? "none" : "block",
+                  position: "absolute",
+                  top: "2rem",
+                  left: "-2rem",
+                  zIndex: 10,
+                  background: "#fff",
+                  borderRadius: "1rem",
+                  padding: "0.875rem 1.25rem",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                  minWidth: "160px",
+                }}
+              >
+                <p style={{ margin: 0, fontSize: "0.68rem", fontWeight: 700, color: "#F5A800", textTransform: "uppercase", letterSpacing: "0.06em" }}>Programmes</p>
+                <div style={{ marginTop: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", fontWeight: 600, padding: "0.3rem 0", borderBottom: "1px solid #F3F4F6" }}>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#2BBFB3" }} />
+                  Get Global
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", fontWeight: 600, padding: "0.3rem 0", borderBottom: "1px solid #F3F4F6" }}>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#F5A800" }} />
+                  Get Local
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", fontWeight: 600, padding: "0.3rem 0", borderBottom: "1px solid #F3F4F6" }}>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#0F2E2B" }} />
+                  Training
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -388,7 +465,7 @@ export default function AboutPage() {
                 background: dark,
                 borderRadius: "1.5rem",
                 padding: "2.5rem",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
               }}
             >
               <p
@@ -467,7 +544,7 @@ export default function AboutPage() {
                   background: "#fff",
                   borderRadius: "1.5rem",
                   padding: "2rem",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
                 }}
               >
                 <StarRow />
@@ -525,8 +602,14 @@ export default function AboutPage() {
           <span style={pill("#fff", teal)}>Our Facilitators</span>
           <h2 style={{ ...sectionHeading, margin: "0 0 2rem" }}>Training local change makers</h2>
           <div style={gridTeam}>
-            {["Helen Quansah", "Michael Woma", "Rebecca Henyo", "Emmanuel Woma", "Alex Agbedu"].map((name) => (
-              <TeamCard key={name} name={name} role="Facilitator" circleBg={amber} nameColor={textDark} roleColor={muted} />
+            {[
+              { name: "Helen Quansah", imageSrc: "/facilitators/Helen-scaled.jpeg" },
+              { name: "Michael Woma", imageSrc: "/facilitators/Michael-Woma.jpg" },
+              { name: "Rebecca Henyo", imageSrc: "/facilitators/Rebecca-Henyo.jpeg" },
+              { name: "Emmanuel Woma" },
+              { name: "Alex Agbedu", imageSrc: "/facilitators/Alex-Agbedu.jpeg" },
+            ].map((p) => (
+              <TeamCard key={p.name} name={p.name} role="Facilitator" imageSrc={p.imageSrc} circleBg={amber} nameColor={textDark} roleColor={muted} />
             ))}
           </div>
         </div>
@@ -539,45 +622,46 @@ export default function AboutPage() {
           <h2 style={{ ...sectionHeading, margin: "0 0 2rem" }}>Governance and leadership</h2>
           <div style={gridTeam}>
             {[
-              { name: "Emmanuel Mumuni", role: "Chair" },
-              { name: "Lawrencia Awuku", role: "Trustee" },
-              { name: "Naa Ayorkor Aryeetey", role: "Trustee" },
-              { name: "MamiSerwaa Amoakohene", role: "Trustee" },
-              { name: "Enoch Lomo Dameteye", role: "Trustee" },
+              { name: "Emmanuel Mumuni", role: "Chair", imageSrc: "/board/Emmanuel-Mumuni.jpeg" },
+              { name: "Lawrencia Awuku", role: "Trustee", imageSrc: "/board/Lawrencia-Awuku.png" },
+              { name: "Naa Ayorkor Aryeetey", role: "Trustee", imageSrc: "/board/Naa-Ayorkor-Aryeetey.jpg" },
+              { name: "MamiSerwaa Amoakohene", role: "Trustee", imageSrc: "/board/MamiSerwaa.jpeg" },
+              { name: "Enoch Lomo Dameteye", role: "Trustee", imageSrc: "/board/Enoch-859x1024.jpeg" },
               { name: "Dorcas Adjeley Yobo", role: "Trustee" },
             ].map((p) => (
-              <TeamCard key={p.name} name={p.name} role={p.role} circleBg={dark} nameColor={textDark} roleColor={muted} />
+              <TeamCard key={p.name} name={p.name} role={p.role} imageSrc={p.imageSrc} circleBg={dark} nameColor={textDark} roleColor={muted} />
             ))}
           </div>
         </div>
       </section>
 
       {/* SECTION 9 */}
-      <section style={{ padding: "6rem 1.5rem", background: dark }}>
+      <section style={{ padding: "6rem 1.5rem", background: "#F0FAFA" }}>
         <div style={wrap}>
           <span style={pill(amber, `${amber}22`)}>Friends of MTW</span>
-          <h2 style={{ ...sectionHeading, color: "#fff", margin: "0 0 2rem" }}>Our global family</h2>
+          <h2 style={{ ...sectionHeading, color: "#1A1A1A", margin: "0 0 2rem" }}>Our global family</h2>
           <div style={gridTeam}>
             {[
-              { name: "Claire Hardy", role: "Co-Founder" },
+              { name: "Claire Hardy", role: "Co-Founder", imageSrc: "/foMTW/Claire -co-founder.jpg" },
               { name: "Megan Taylor", role: "Co-Founder" },
-              { name: "Kellie Lucas", role: "Friend of MTW" },
-              { name: "Caroline Capon", role: "Founding Member" },
-              { name: "Alyssa Simon", role: "Friend of MTW" },
-              { name: "Jamal Adomako", role: "Friend of MTW" },
+              { name: "Kellie Lucas", role: "Friend of MTW", imageSrc: "/foMTW/Kellie-Lucas.jpg" },
+              { name: "Caroline Capon", role: "Founding Member", imageSrc: "/foMTW/Caroline-Capon-founding-member.jpg" },
+              { name: "Alyssa Simon", role: "Friend of MTW", imageSrc: "/foMTW/Alyssa-Simon.jpeg" },
+              { name: "Jamal Adomako", role: "Friend of MTW", imageSrc: "/foMTW/Jamal-Adomako.jpeg" },
               { name: "Amanda Minett", role: "Friend of MTW" },
             ].map((p) => (
               <TeamCard
                 key={p.name}
                 name={p.name}
                 role={p.role}
+                imageSrc={p.imageSrc}
                 circleBg={amber}
-                nameColor="#fff"
-                roleColor="rgba(255,255,255,0.6)"
+                nameColor="#1A1A1A"
+                roleColor="#6B7280"
                 cardStyleOverride={{
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "none",
+                  background: "#fff",
+                  border: "1px solid rgba(43,191,179,0.12)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
                 }}
               />
             ))}
@@ -629,7 +713,7 @@ export default function AboutPage() {
             <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 1rem" }}>
               Join Our Mission
             </p>
-            <h2 style={{ fontSize: "clamp(1.35rem, 3vw, 2rem)", fontWeight: 900, color: "#fff", margin: "0 0 1rem", lineHeight: 1.2 }}>
+            <h2 style={{ fontSize: "clamp(1.35rem, 3vw, 2rem)", fontWeight: 800, color: "#fff", margin: "0 0 1rem", lineHeight: 1.2 }}>
               Together, let&apos;s shape a brighter future for Ghana&apos;s youth
             </h2>
             <p style={{ color: "rgba(255,255,255,0.85)", lineHeight: 1.7, margin: "0 0 2rem", fontSize: "0.95rem" }}>

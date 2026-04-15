@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 
 const wrap = { maxWidth: "1280px", margin: "0 auto", padding: "0 1.5rem" };
 const teal = "#2BBFB3";
@@ -91,6 +91,14 @@ function SocialButton({ href, label, children }: { href: string; label: string; 
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 900);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -102,24 +110,28 @@ export default function ContactPage() {
       <section
         style={{
           width: "100%",
-          background: dark,
-          paddingTop: "120px",
+          background: "#F0FAFA",
+          paddingTop: "140px",
           paddingBottom: "80px",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div style={wrap}>
+        <div style={{ position: "absolute", top: 0, right: 0, width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(43,191,179,0.15) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ position: "absolute", bottom: "-120px", left: "-80px", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,168,0,0.12) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ ...wrap, position: "relative", zIndex: 1 }}>
           <nav style={{ fontSize: "0.8rem", color: teal, marginBottom: "1rem" }}>
             <Link href="/" style={{ color: teal, textDecoration: "none" }}>
               Home
             </Link>
-            <span style={{ color: "rgba(255,255,255,0.4)" }}> / </span>
-            <span style={{ color: "#fff" }}>Contact</span>
+            <span style={{ color: "rgba(26,26,26,0.35)" }}> / </span>
+            <span style={{ color: "#1A1A1A" }}>Contact</span>
           </nav>
           <h1
             style={{
-              fontSize: "clamp(2rem, 4vw, 3rem)",
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: 800,
-              color: "#fff",
+              color: "#1A1A1A",
               margin: 0,
               marginBottom: "0.75rem",
             }}
@@ -128,20 +140,39 @@ export default function ContactPage() {
           </h1>
           <div
             style={{
-              width: "80px",
-              height: "4px",
-              background: amber,
-              borderRadius: "2px",
-              marginBottom: "1.25rem",
+              display: "none",
             }}
           />
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.05rem", maxWidth: "36rem", margin: 0 }}>
+          <p style={{ color: muted, fontSize: "1.05rem", maxWidth: "36rem", margin: 0 }}>
             Reach out to our team for partnerships, programme enquiries, or general questions.
           </p>
+          <div
+            style={{
+              position: isMobile ? "static" : "absolute",
+              bottom: isMobile ? undefined : "2rem",
+              right: isMobile ? undefined : "1.5rem",
+              background: "#fff",
+              borderRadius: "1rem",
+              padding: "1rem 1.25rem",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              minWidth: "170px",
+              textAlign: "center",
+              margin: isMobile ? "1rem auto 0" : undefined,
+              width: isMobile ? "fit-content" : undefined,
+            }}
+          >
+            <p style={{ margin: 0, color: teal, fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>Based In</p>
+            <p style={{ margin: "0.2rem 0 0", color: "#1A1A1A", fontWeight: 800, fontSize: "1.5rem", lineHeight: 1.15 }}>Ghana</p>
+            <p style={{ margin: "0.2rem 0 0.45rem", color: "#6B7280", fontSize: "0.78rem" }}>Greater Accra</p>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BBFB3" strokeWidth="2" style={{ display: "block", margin: "0 auto" }} aria-hidden>
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
         </div>
       </section>
 
-      <section style={{ padding: "6rem 0", background: "#fff" }}>
+      <section style={{ padding: "6rem 1.5rem", background: "#fff" }}>
         <div style={wrap}>
           <div style={grid2}>
             <div>
@@ -178,14 +209,23 @@ export default function ContactPage() {
                 >
                   <div
                     style={{
-                      width: "12px",
-                      height: "12px",
+                      width: "28px",
+                      height: "28px",
                       borderRadius: "50%",
-                      background: teal,
+                      background: "rgba(43,191,179,0.12)",
+                      border: "1px solid rgba(43,191,179,0.25)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: teal,
+                      fontWeight: 700,
                       flexShrink: 0,
-                      marginTop: "0.35rem",
+                      marginTop: "0.1rem",
+                      fontSize: "0.7rem",
                     }}
-                  />
+                  >
+                    {row.label.charAt(0)}
+                  </div>
                   <div>
                     <div style={{ fontWeight: 700, color: dark, fontSize: "0.9rem" }}>{row.label}</div>
                     <div style={{ color: muted, fontSize: "0.95rem", marginTop: "0.2rem" }}>{row.value}</div>
@@ -226,7 +266,8 @@ export default function ContactPage() {
                 background: "#fff",
                 borderRadius: "1.5rem",
                 padding: "2.5rem",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                borderTop: "4px solid #2BBFB3",
               }}
             >
               {submitted ? (
@@ -238,17 +279,17 @@ export default function ContactPage() {
                   <label style={{ display: "block", fontWeight: 600, color: dark, fontSize: "0.85rem", marginBottom: "0.35rem" }}>
                     Full Name
                   </label>
-                  <input name="name" type="text" required style={inputStyle} />
+                  <input name="name" type="text" required style={inputStyle} onFocus={(e) => (e.currentTarget.style.border = "1.5px solid #2BBFB3")} onBlur={(e) => (e.currentTarget.style.border = `1.5px solid ${border}`)} />
 
                   <label style={{ display: "block", fontWeight: 600, color: dark, fontSize: "0.85rem", marginBottom: "0.35rem" }}>
                     Email Address
                   </label>
-                  <input name="email" type="email" required style={inputStyle} />
+                  <input name="email" type="email" required style={inputStyle} onFocus={(e) => (e.currentTarget.style.border = "1.5px solid #2BBFB3")} onBlur={(e) => (e.currentTarget.style.border = `1.5px solid ${border}`)} />
 
                   <label style={{ display: "block", fontWeight: 600, color: dark, fontSize: "0.85rem", marginBottom: "0.35rem" }}>
                     Subject
                   </label>
-                  <input name="subject" type="text" required style={inputStyle} />
+                  <input name="subject" type="text" required style={inputStyle} onFocus={(e) => (e.currentTarget.style.border = "1.5px solid #2BBFB3")} onBlur={(e) => (e.currentTarget.style.border = `1.5px solid ${border}`)} />
 
                   <label style={{ display: "block", fontWeight: 600, color: dark, fontSize: "0.85rem", marginBottom: "0.35rem" }}>
                     Message
@@ -258,6 +299,8 @@ export default function ContactPage() {
                     required
                     rows={5}
                     style={{ ...inputStyle, minHeight: "140px", resize: "vertical" as const, fontFamily: "inherit" }}
+                    onFocus={(e) => (e.currentTarget.style.border = "1.5px solid #2BBFB3")}
+                    onBlur={(e) => (e.currentTarget.style.border = `1.5px solid ${border}`)}
                   />
 
                   <button type="submit" style={btnAmber}>

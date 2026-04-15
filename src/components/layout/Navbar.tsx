@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, type CSSProperties } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -18,10 +19,12 @@ const navLinks: { label: string; href: string }[] = [
 const teal = "#2BBFB3";
 const text = "#1A1A1A";
 const border = "#E5E7EB";
-const accent = "#F5A800";
-const accentDark = "#D48F00";
+const accent = "#2BBFB3";
+const accentDark = "#1A9A8F";
+const white = "#FFFFFF";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -50,11 +53,10 @@ export default function Navbar() {
     right: 0,
     zIndex: 50,
     transition: "all 0.3s ease",
-    background: scrolled ? "#fff" : "rgba(255,255,255,0.95)",
-    backdropFilter: scrolled ? "none" : "blur(8px)",
-    boxShadow: scrolled ? "0 4px 6px -1px rgba(0,0,0,0.08)" : "none",
-    paddingTop: scrolled ? "0.75rem" : "1rem",
-    paddingBottom: scrolled ? "0.75rem" : "1rem",
+    background: white,
+    backdropFilter: scrolled ? "none" : "blur(6px)",
+    boxShadow: scrolled ? "0 1px 0 rgba(0,0,0,0.06)" : "none",
+    borderBottom: `1px solid ${border}`,
   };
 
   const innerStyle: CSSProperties = {
@@ -74,10 +76,13 @@ export default function Navbar() {
   };
 
   const linkStyle: CSSProperties = {
-    fontSize: "0.875rem",
+    fontSize: "0.9rem",
     fontWeight: 600,
     color: text,
     textDecoration: "none",
+    lineHeight: 1,
+    paddingBottom: "0.3rem",
+    borderBottom: "2px solid transparent",
   };
 
   const donateBtnStyle: CSSProperties = {
@@ -93,18 +98,27 @@ export default function Navbar() {
     textDecoration: "none",
     border: "none",
     cursor: "pointer",
+    lineHeight: 1,
   };
 
   return (
     <header style={headerStyle}>
-      <div style={innerStyle}>
+      <div
+        style={{
+          ...innerStyle,
+          minHeight: "62px",
+          paddingTop: scrolled ? "0.75rem" : "1rem",
+          paddingBottom: scrolled ? "0.75rem" : "1rem",
+          transition: "padding 0.25s ease",
+        }}
+      >
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <Image
             src="/images/logo.png"
             alt="Move The World"
             width={140}
             height={48}
-            style={{ height: "2.5rem", width: "auto" }}
+            style={{ height: "36px", width: "auto" }}
             priority
           />
         </Link>
@@ -116,12 +130,19 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  style={linkStyle}
+                  style={{
+                    ...linkStyle,
+                    color: pathname === link.href ? teal : text,
+                    borderBottom: pathname === link.href ? `2px solid ${teal}` : "2px solid transparent",
+                  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = teal;
+                    e.currentTarget.style.borderBottom = `2px solid ${teal}`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = text;
+                    const isActive = pathname === link.href;
+                    e.currentTarget.style.color = isActive ? teal : text;
+                    e.currentTarget.style.borderBottom = isActive ? `2px solid ${teal}` : "2px solid transparent";
                   }}
                 >
                   {link.label}

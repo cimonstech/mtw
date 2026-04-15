@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 
 const wrap: CSSProperties = { maxWidth: "1280px", margin: "0 auto", padding: "0 1.5rem" };
 const teal = "#2BBFB3";
@@ -12,21 +12,69 @@ const surface = "#F8FFFE";
 const muted = "#6B7280";
 const btnAmber: CSSProperties = { display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "0.875rem 2rem", background: "#F5A800", color: "#fff", fontWeight: 700, borderRadius: "999px", textDecoration: "none", fontSize: "0.88rem", border: "none", cursor: "pointer" };
 const btnTealOutline: CSSProperties = { display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "0.875rem 2rem", background: "transparent", border: "2px solid #2BBFB3", color: "#2BBFB3", fontWeight: 700, borderRadius: "999px", textDecoration: "none", fontSize: "0.88rem", cursor: "pointer" };
-const cardStyle: CSSProperties = { background: "#fff", borderRadius: "1.25rem", boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)", overflow: "hidden" };
-const sectionHeading: CSSProperties = { fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#1A1A1A", lineHeight: 1.15, letterSpacing: "-0.02em" };
+const cardStyle: CSSProperties = { background: "#fff", borderRadius: "1.5rem", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", overflow: "hidden" };
+const sectionHeading: CSSProperties = { fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.15, letterSpacing: "-0.02em" };
 const bodyText: CSSProperties = { color: "#6B7280", lineHeight: 1.8, fontSize: "0.95rem" };
 const pill = (color: string, bg: string): CSSProperties => ({ display: "inline-flex", alignItems: "center", background: bg, color, padding: "0.35rem 1rem", borderRadius: "999px", fontSize: "0.78rem", fontWeight: 700, width: "fit-content", marginBottom: "0.75rem" });
 
 void cardStyle;
 
+const partnerLogos: { src: string; alt: string }[] = [
+  { src: "/partners/Ashworth.webp", alt: "Ashworth" },
+  { src: "/partners/GHIB.webp", alt: "GHIB" },
+  { src: "/partners/globalcitizenshipcollective.webp", alt: "Global Citizenship Collective" },
+  { src: "/partners/globalfundforchildren.webp", alt: "Global Fund for Children" },
+  { src: "/partners/mia.webp", alt: "MIA" },
+  { src: "/partners/NCCE.webp", alt: "NCCE" },
+  { src: "/partners/Oakdale-trust.webp", alt: "Oakdale Trust" },
+  { src: "/partners/pan-african.webp", alt: "Pan African" },
+  { src: "/partners/pearlston-alternative.webp", alt: "Pearlston Alternative" },
+  { src: "/partners/Souter.webp", alt: "Souter" },
+  { src: "/partners/The-Cordis-Charitable-Trust.webp", alt: "The Cordis Charitable Trust" },
+];
+
 export default function PartnersPage() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const isMobile = !isDesktop;
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <div style={{ background: "#fff" }}>
-      <section style={{ background: dark, paddingTop: "140px", paddingBottom: "80px", textAlign: "center" }}>
-        <div style={wrap}>
+      <section style={{ background: "#F0FAFA", paddingTop: "140px", paddingBottom: "80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, right: 0, width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(43,191,179,0.15) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ position: "absolute", bottom: "-120px", left: "-80px", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,168,0,0.12) 0%, transparent 70%)", zIndex: 0 }} />
+        <div style={{ ...wrap, position: "relative", zIndex: 1 }}>
           <p style={{ margin: "0 0 1rem", color: teal, fontSize: "0.8rem" }}>Home / Partners</p>
-          <h1 style={{ margin: "0 0 1rem", color: "#fff", fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900 }}>Our Partners</h1>
-          <p style={{ margin: 0, color: "rgba(255,255,255,0.6)" }}>Working together to empower young people across Ghana.</p>
+          <h1 style={{ margin: "0 0 1rem", color: "#1A1A1A", fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800 }}>Our Partners</h1>
+          <p style={{ margin: "0 auto", color: muted, maxWidth: "42rem" }}>Working together to empower young people across Ghana.</p>
+          <div
+            style={{
+              position: isMobile ? "static" : "absolute",
+              bottom: isMobile ? undefined : "2rem",
+              right: isMobile ? undefined : "1.5rem",
+              background: "#fff",
+              borderRadius: "1rem",
+              padding: "1rem 1.25rem",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              minWidth: "180px",
+              textAlign: "left",
+              margin: isMobile ? "1rem auto 0" : undefined,
+              width: isMobile ? "fit-content" : undefined,
+            }}
+          >
+            <p style={{ margin: 0, color: teal, fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>Est.</p>
+            <p style={{ margin: "0.2rem 0 0", fontSize: "2rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>2016</p>
+            <p style={{ margin: "0.1rem 0 0.5rem", color: muted, fontSize: "0.78rem" }}>Years of impact</p>
+            <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "999px", overflow: "hidden" }}>
+              <div style={{ width: "100%", height: "100%", background: "#2BBFB3", borderRadius: "999px" }} />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -44,23 +92,90 @@ export default function PartnersPage() {
               </p>
               <a href="#become-a-partner" style={btnAmber}>Become a Partner</a>
             </div>
-            <div style={{ position: "relative", height: "460px", borderRadius: "2rem", overflow: "hidden" }}>
-              <Image src="/images/impact-2.webp" alt="" fill style={{ objectFit: "cover" }} />
+            <div style={{ position: "relative", overflow: "visible" }}>
+              <div style={{ position: "relative", height: "460px", borderRadius: "2rem", overflow: "hidden" }}>
+                <Image src="/images/impact-2.webp" alt="" fill style={{ objectFit: "cover" }} />
+              </div>
+              <div
+                style={{
+                  display: isMobile ? "none" : "block",
+                  position: "absolute",
+                  bottom: "2rem",
+                  left: "-2rem",
+                  zIndex: 10,
+                  background: "#fff",
+                  borderRadius: "1rem",
+                  padding: "0.875rem 1.25rem",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                  minWidth: "170px",
+                }}
+              >
+                <p style={{ margin: 0, fontSize: "0.68rem", fontWeight: 700, color: "#2BBFB3", textTransform: "uppercase", letterSpacing: "0.06em" }}>Partners</p>
+                <p style={{ margin: "0.25rem 0 0", fontSize: "1.5rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>10+</p>
+                <p style={{ margin: "0.15rem 0 0.45rem", color: "#6B7280", fontSize: "0.72rem" }}>organisations</p>
+                <div style={{ display: "flex", alignItems: "center", marginLeft: "8px" }}>
+                  {[
+                    "/partners/Ashworth.webp",
+                    "/partners/GHIB.webp",
+                    "/partners/globalfundforchildren.webp",
+                    "/partners/NCCE.webp",
+                  ].map((src) => (
+                    <span key={src} style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#fff", marginLeft: "-8px", position: "relative", overflow: "hidden", border: "1px solid #E5E7EB" }}>
+                      <Image src={src} alt="" fill sizes="28px" style={{ objectFit: "contain", padding: "3px" }} />
+                    </span>
+                  ))}
+                  <span style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#F3F4F6", color: "#6B7280", fontSize: "0.65rem", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: "-8px" }}>+6</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section style={{ background: surface, padding: "6rem 1.5rem" }}>
+      <section style={{ background: "#F0FAFA", padding: "6rem 1.5rem" }}>
         <div style={wrap}>
           <div style={{ textAlign: "center" }}>
             <span style={pill("#fff", teal)}>Our Partners</span>
             <h2 style={{ ...sectionHeading, margin: "0.5rem 0 0" }}>Those who make it possible</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1.5rem", marginTop: "3rem" }}>
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} style={{ background: "#fff", borderRadius: "1rem", padding: "1.5rem", height: "90px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-                <div style={{ height: "28px", width: "80%", background: "#E5E7EB", borderRadius: "0.5rem" }} />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isDesktop
+                ? "repeat(4, minmax(0, 1fr))"
+                : undefined,
+              gridAutoFlow: isMobile ? "column" : undefined,
+              gridAutoColumns: isMobile ? "calc(50% - 0.75rem)" : undefined,
+              gap: "1.5rem",
+              marginTop: "3rem",
+              overflowX: isMobile ? "auto" : undefined,
+              paddingBottom: isMobile ? "0.35rem" : undefined,
+              scrollSnapType: isMobile ? "x mandatory" : undefined,
+            }}
+          >
+            {partnerLogos.map((logo) => (
+              <div
+                key={logo.src}
+                style={{
+                  background: "#fff",
+                  borderRadius: "1rem",
+                  padding: "0.75rem",
+                  aspectRatio: "4 / 3",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                  position: "relative",
+                  scrollSnapAlign: isMobile ? "start" : undefined,
+                }}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  fill
+                  sizes="160px"
+                  style={{ objectFit: "contain", padding: "0.75rem" }}
+                />
               </div>
             ))}
           </div>

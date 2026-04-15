@@ -92,49 +92,6 @@ const socials: SocialEntry[] = [
 export default function Footer() {
   return (
     <footer style={{ background: colors.dark, color: "#fff", marginTop: "4rem" }}>
-      <div style={{ background: colors.teal, padding: "2.25rem 0" }}>
-        <div style={{ ...wrap, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))", gap: "1rem", alignItems: "center" }}>
-          <div>
-            <h3 style={{ margin: 0, color: "#fff", fontSize: "1.35rem", fontWeight: 800 }}>Stay in the loop</h3>
-            <p style={{ margin: "0.35rem 0 0", color: "rgba(255,255,255,0.85)", fontSize: "0.95rem" }}>
-              Get updates on our programmes, impact stories, and events.
-            </p>
-          </div>
-          <form style={{ display: "flex", gap: "0.6rem", width: "100%" }}>
-            <input
-              type="email"
-              placeholder="Your email address"
-              style={{
-                flex: 1,
-                padding: "0.75rem 1rem",
-                borderRadius: "999px",
-                border: "1px solid rgba(255,255,255,0.35)",
-                background: "rgba(255,255,255,0.16)",
-                color: "#fff",
-                fontSize: "0.88rem",
-                minWidth: 0,
-                outline: "none",
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: "0.75rem 1.2rem",
-                borderRadius: "999px",
-                border: "none",
-                background: colors.amber,
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "0.88rem",
-                cursor: "pointer",
-              }}
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-
       <div style={{ ...wrap, paddingTop: "3rem", paddingBottom: "3rem" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2rem" }}>
           <div>
