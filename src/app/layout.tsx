@@ -59,9 +59,13 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: [{ url: "/favicon.png?v=2", type: "image/png" }],
-    shortcut: ["/favicon.png?v=2"],
-    apple: [{ url: "/favicon.png?v=2", type: "image/png" }],
+    icon: [
+      { url: "/favicon_io/favicon.ico", type: "image/x-icon" },
+      { url: "/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: ["/favicon_io/favicon.ico"],
+    apple: [{ url: "/favicon_io/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
