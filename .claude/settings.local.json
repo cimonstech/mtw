@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx shadcn@latest:*)"
+      "Bash(npx shadcn@latest:*)",
+      "Bash(grep:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
