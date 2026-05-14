@@ -94,3 +94,12 @@ main::before {
   transform: translate3d(-9999px, -9999px, 0);
   contain: paint;
 }
+
+@media (max-width: 899px) {
+  main section:not(:first-child) {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+}

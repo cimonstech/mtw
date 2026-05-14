@@ -9,10 +9,12 @@ export default function GlobalMotion() {
 
   useEffect(() => {
     let cleanup: (() => void) | undefined;
+    let cancelled = false;
 
     const run = async () => {
       const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
 
       const sectionEls = gsap.utils.toArray<HTMLElement>("main section");
@@ -21,17 +23,26 @@ export default function GlobalMotion() {
       );
       const headingEls = gsap.utils.toArray<HTMLElement>("main h1, main h2, main h3");
 
-      sectionEls.forEach((el, idx) => {
-        // Apply a unified, modern card-like section framing across pages.
-        // Keep the first (hero) section full-bleed.
+      const applySectionFrame = (el: HTMLElement, idx: number) => {
         if (idx === 0) return;
-        el.style.width = "min(1400px, calc(100% - 1.5rem))";
+        const mobile = window.matchMedia("(max-width: 899px)").matches;
         el.style.marginInline = "auto";
-        el.style.marginTop = "1.15rem";
-        el.style.borderRadius = "1.5rem";
         el.style.overflow = "hidden";
         el.style.border = "1px solid rgba(15,46,43,0.06)";
         el.style.boxShadow = "0 4px 22px rgba(15,46,43,0.06)";
+        if (mobile) {
+          el.style.width = "100%";
+          el.style.marginTop = "0.35rem";
+          el.style.borderRadius = "0.75rem";
+        } else {
+          el.style.width = "min(1400px, calc(100% - 1.5rem))";
+          el.style.marginTop = "1.15rem";
+          el.style.borderRadius = "1.5rem";
+        }
+      };
+
+      sectionEls.forEach((el, idx) => {
+        applySectionFrame(el, idx);
       });
 
       gsap.set(sectionEls, { opacity: 0, y: 28, filter: "blur(6px)" });
@@ -88,9 +99,13 @@ export default function GlobalMotion() {
       };
     };
 
-    run();
+    const frame = window.requestAnimationFrame(() => {
+      void run();
+    });
 
     return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
       cleanup?.();
     };
   }, [pathname]);
