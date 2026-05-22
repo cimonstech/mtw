@@ -84,7 +84,7 @@ interface StatConfig {
 }
 
 const STATS: readonly StatConfig[] = [
- { target: 1000, suffix: "+", label: "Students Reached" },
+ { target: 3000, suffix: "+", label: "Students Reached" },
  { target: 60, suffix: "%", label: "Are Girls" },
  { target: 20, suffix: "+", label: "Trained Facilitators" },
  { target: 3, suffix: "", label: "Core Programmes" },

@@ -24,7 +24,7 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
- { target: 1000, suffix: "+", label: "Students Reached" },
+ { target: 3000, suffix: "+", label: "Students Reached" },
  { target: 60, suffix: "%", label: "Are Girls" },
  { target: 20, suffix: "+", label: "Trained Facilitators" },
  { target: 3, suffix: "", label: "Core Programmes" },
@@ -175,7 +175,7 @@ export default function ImpactPage() {
  }}
  >
  <p style={{ margin: 0, fontSize: "0.68rem", fontWeight: 700, color: "#2BBFB3", textTransform: "uppercase", letterSpacing: "0.06em" }}>Students</p>
- <p style={{ margin: "0.25rem 0 0", fontSize: "1.5rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>1,000+</p>
+ <p style={{ margin: "0.25rem 0 0", fontSize: "1.5rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>3,000+</p>
  <p style={{ margin: "0.2rem 0 0", color: "#6B7280", fontSize: "0.72rem" }}>reached to date</p>
  <div style={{ display: "flex", gap: "4px", marginTop: "0.55rem" }}>
  {Array.from({ length: 5 }, (_, i) => (
@@ -197,21 +197,21 @@ export default function ImpactPage() {
  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "1.5rem" }}>
  {[
  {
- image: "/images/impact-1.webp",
+ image: "/images/impact-2.webp",
  tag: "Get Global",
  title: "Building global thinkers in Medie",
  excerpt:
  "Students in Medie explored SDGs 3 through hands-on health workshops led by local facilitators, sparking conversations that reached their families and neighbours.",
  },
  {
- image: "/images/impact-2.webp",
+ image: "/images/impact-4.jpeg",
  tag: "Get Local",
  title: "From classroom to community action",
  excerpt:
  "Get Local participants identified poor sanitation as a key local issue and led a community awareness campaign, presenting their findings to local leaders.",
  },
  {
- image: "/images/impact-3.webp",
+ image: "/images/training-a.jpeg",
  tag: "Training",
  title: "Training a new generation of facilitators",
  excerpt:

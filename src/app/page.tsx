@@ -309,7 +309,7 @@ export default function Home() {
  ))}
  </div>
  <p style={{ margin: 0, color: "rgba(255,255,255,0.7)", fontSize: "0.82rem" }}>
- Trusted by <span style={{ color: "#fff", fontWeight: 700 }}>1,000+</span> young people across Ghana
+ Trusted by <span style={{ color: "#fff", fontWeight: 700 }}>3,000+</span> young people across Ghana
  </p>
  </div>
  </div>
@@ -344,7 +344,7 @@ export default function Home() {
  }}
  >
  <p style={{ margin: 0, fontSize: "0.65rem", fontWeight: 700, color: "#2BBFB3", textTransform: "uppercase", letterSpacing: "0.06em" }}>Students</p>
- <p style={{ margin: "0.2rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>1,000+</p>
+ <p style={{ margin: "0.2rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: "#1A1A1A", lineHeight: 1.1 }}>3,000+</p>
  <p style={{ margin: "0.15rem 0 0", fontSize: "0.7rem", color: "#6B7280" }}>across Ghana</p>
  </div>
  <div
@@ -446,20 +446,14 @@ export default function Home() {
  </div>
  <div style={{ marginTop: "1.25rem", background: "#F5A800", borderRadius: "1.25rem", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
  <p style={{ margin: 0, color: "#fff", fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>Community Reach</p>
- <p style={{ margin: "0.1rem 0 0", color: "#fff", fontSize: "2rem", fontWeight: 800, lineHeight: 1.1 }}>50+</p>
- <p style={{ margin: "0.1rem 0 0.3rem", color: "rgba(255,255,255,0.7)", fontSize: "0.78rem" }}>Communities impacted</p>
- {[
- ["Accra", "80%"],
- ["Volta", "55%"],
- ["Other", "35%"],
- ].map(([label, width]) => (
- <div key={label as string} style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.25rem" }}>
- <span style={{ width: "50px", fontSize: "0.65rem", color: "rgba(255,255,255,0.7)" }}>{label as string}</span>
- <div style={{ flex: 1, height: "6px", background: "rgba(255,255,255,0.2)", borderRadius: "999px", overflow: "hidden" }}>
- <div style={{ width: width as string, height: "100%", background: "#fff", borderRadius: "999px" }} />
- </div>
- </div>
- ))}
+ <p style={{ margin: "0.1rem 0 0", color: "#fff", fontSize: "2rem", fontWeight: 800, lineHeight: 1.1 }}>15</p>
+ <p style={{ margin: "0.1rem 0 0.3rem", color: "rgba(255,255,255,0.7)", fontSize: "0.78rem" }}>Communities reached</p>
+<div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.25rem" }}>
+<span style={{ width: "50px", fontSize: "0.65rem", color: "rgba(255,255,255,0.7)" }}>Accra</span>
+<div style={{ flex: 1, height: "6px", background: "rgba(255,255,255,0.2)", borderRadius: "999px", overflow: "hidden" }}>
+<div style={{ width: "100%", height: "100%", background: "#fff", borderRadius: "999px" }} />
+</div>
+</div>
  </div>
  </div>
  {/* Text */}
@@ -480,7 +474,7 @@ export default function Home() {
  <p style={bodyText}>
  Move The World was born from that conversation, and has since designed its own
  Global Citizenship curriculum, partnering with schools and training local
- facilitators to support over 1,000 children.
+ facilitators to support over 3,000 children.
  </p>
  <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", margin: "0.25rem 0" }}>
  {[
