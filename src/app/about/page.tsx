@@ -628,7 +628,7 @@ export default function AboutPage() {
  { name: "Naa Ayorkor Aryeetey", role: "Trustee", imageSrc: "/board/Naa-Ayorkor-Aryeetey.jpg" },
  { name: "MamiSerwaa Amoakohene", role: "Trustee", imageSrc: "/board/MamiSerwaa.jpeg" },
  { name: "Enoch Lomo Dameteye", role: "Trustee", imageSrc: "/board/Enoch-859x1024.jpeg" },
- { name: "Dorcas Adjeley Yobo", role: "Trustee" },
+ { name: "Dorcas Adjeley Yobo", role: "Trustee", imageSrc: "/board/DorcasYobo.jpeg" },
  ].map((p) => (
  <TeamCard key={p.name} name={p.name} role={p.role} imageSrc={p.imageSrc} circleBg={dark} nameColor={textDark} roleColor={muted} />
  ))}
